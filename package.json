@@ -1,0 +1,35 @@
+{
+    "name": "armando_almengor_laboratorio_7",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "mongo:start": "docker run --rm -p=27017:27017 --env-file=./.env --network=lab8 --name=dessoftix--lab8--mongo -d centos/mongodb-32-centos7",
+        "lab8:build": "docker build -t lab8/nodejs .",
+        "lab8:start": "docker run --rm -p=3000:3000 --env-file=./.env --network=lab8 --name=dessoftix--lab8--nodejs -d lab8/nodejs",
+        "lab8:stop": "docker stop dessoftix--lab8--nodejs",
+        "mongo:stop": "docker stop dessoftix--lab8--mongo",
+        "docker:stop-all": "docker stop $(docker ps -aq)",
+        "docker:examinate-db": "docker exec -it dessoftix--lab8--mongo sh",
+        "docker:examinate-lab8": "docker exec -it dessoftix--lab8--nodejs sh",
+        "start": "nodemon app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/2020-SEMI-TOPESP-II/laboratorio_5_guia.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/2020-SEMI-TOPESP-II/laboratorio_5_guia/issues"
+    },
+    "homepage": "https://github.com/2020-SEMI-TOPESP-II/laboratorio_5_guia#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.9.18",
+        "nodemon": "^2.0.4"
+    }
+}
