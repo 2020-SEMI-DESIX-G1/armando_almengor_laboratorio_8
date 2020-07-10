@@ -13,7 +13,8 @@
         "docker:stop-all": "docker stop $(docker ps -aq)",
         "docker:examinate-db": "docker exec -it dessoftix--lab8--mongo sh",
         "docker:examinate-lab8": "docker exec -it dessoftix--lab8--nodejs sh",
-        "start": "nodemon app.js"
+        "dev": "npm run mongo:start && nodemon app.js",
+        "start": "app.js "
     },
     "repository": {
         "type": "git",
@@ -30,6 +31,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "mongoose": "^5.9.18",
-        "nodemon": "^2.0.4"
+        "nodemon": "^2.0.4",
+        "pug": "^3.0.0"
     }
 }
