@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const connectDb = require('./dbConfig');
-const Students = require('./models/students');
+const Estudiantes = require('./models/Estudiantes');
 
 const PORT = 3000;
 
@@ -14,12 +14,31 @@ app.set('views', './views');
 
 // Intermediarios
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 // Controladores --Views
     //select all
-    app.get('/students', async (req, res) => {
-        const students = await Students.find().select('nombre edad');
-        res.render('students', { students });
+    app.get('/estudiantes', async (req, res) => {
+        const estudiantes = await Estudiantes.find().select('nombre edad');
+        res.render('estudiantes', { estudiantes });
+    });
+
+//Select by ID
+app.get('/estudiantes/:id', async (req, res) => {
+    try {
+        const estudiante = await Estudiantes.findById(req.params.id).select('nombre edad');
+        res.render('estudiantes_detail', { estudiante });
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+});
+//Create new
+    app.post('/estudiantes', async (req, res) => {
+        const {nombre, edad} = req.body;
+        await Estudiantes.create({nombre, edad});
+        const estudiantes = await Estudiantes.find().select('nombre edad');
+        res.render('estudiantes', { estudiantes });
     });
 
 // Controladores --API
@@ -29,26 +48,26 @@ app.use(bodyParser.json());
     });
 
     //select all
-    app.get('/api/students/', async (req, res) => {
-        const students = await Students.find().select('nombre edad');
+    app.get('/api/estudiantes/', async (req, res) => {
+        const estudiantes = await Estudiantes.find().select('nombre edad');
         res.json({
-            students,
-            Total: students.length
+            estudiantes,
+            Total: estudiantes.length
         });
     });
 
     //create new
-    app.post('/api/students/', async (req, res) => {
+    app.post('/api/estudiantes/', async (req, res) => {
         const { nombre, edad } = req.body;
-        await Students.create({ nombre, edad });
+        await Estudiantes.create({ nombre, edad });
         res.json({ nombre, edad });
     });
 
     //select by id
-    app.get('/api/students/:id', async (req, res) => {
+    app.get('/api/estudiantes/:id', async (req, res) => {
         try {
-            const students = await Students.findById(req.params.id).select('nombre edad');
-            res.json(students);
+            const estudiantes = await Estudiantes.findById(req.params.id).select('nombre edad');
+            res.json(estudiantes);
         } catch (error) {
             console.log(error);
             res.json({});
@@ -56,10 +75,10 @@ app.use(bodyParser.json());
     });
 
     //update
-    app.put('/api/students/:id', async (req, res) => {
+    app.put('/api/estudiantes/:id', async (req, res) => {
         try {
-            const students = await Students.findByIdAndUpdate(req.params.id,req.body,{useFindAndModify: false});
-            res.json(students);
+            const estudiantes = await Estudiantes.findByIdAndUpdate(req.params.id,req.body,{useFindAndModify: false});
+            res.json(estudiantes);
         } catch (error) {
             console.log(error);
             res.json({});
@@ -67,10 +86,10 @@ app.use(bodyParser.json());
     });
 
     //delete
-    app.delete('/api/students/:id', async (req, res) => {
+    app.delete('/api/estudiantes/:id', async (req, res) => {
         try {
-            const students = await Students.findByIdAndRemove(req.params.id,{useFindAndModify: false});
-            res.json(students);
+            const estudiantes = await Estudiantes.findByIdAndRemove(req.params.id,{useFindAndModify: false});
+            res.json(estudiantes);
         } catch (error) {
             console.log(error);
             res.json({});

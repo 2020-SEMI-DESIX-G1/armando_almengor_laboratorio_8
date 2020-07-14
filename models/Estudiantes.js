@@ -5,6 +5,6 @@ const schema = new mongoose.Schema({
   edad: { type: String },
 });
 
-const Students = mongoose.model('Students', schema);
+const Estudiantes = mongoose.model('Estudiantes', schema);
 
-module.exports = Students;
+module.exports = Estudiantes;
