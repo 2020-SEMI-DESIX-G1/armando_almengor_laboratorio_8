@@ -5,6 +5,15 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
     body
-        a(href='/estudiantes') Ir atrás
-        h1 #{estudiante.nombre}
-        h2 Edad #{estudiante.edad}
+        a(href='/estudiantes') Volver
+        h1 Detalle del Estudiante
+        form(method="post", action="/estudiantes/actualizar/" + estudiante._id)
+            label(for="nombre") Nombre:
+            input(name="nombre", type="text" value=estudiante.nombre)
+            br
+            br
+            label(for="edad") Edad:
+            input(name="edad", type="text" value=estudiante.edad)
+            br
+            br
+            button(type="submit") Actualizar

@@ -10,16 +10,24 @@ html(lang="en")
             label(for="nombre") Nombre:
             input(name="nombre", type="text")
             br
+            br
             label(for="edad") Edad:
             input(name="edad", type="text")
-            button(type="submit") Save
-        table
-            thead
-                th Nombre
-                th Edad
-            tbody
-                each estudiante in estudiantes
-                    tr  
-                        td 
-                            a(href='/estudiantes/' + estudiante._id) #{estudiante.nombre}
-                        td #{estudiante.edad}
+            br
+            br
+            button(type="submit") Guardar
+        br
+        table(border=1)
+                thead
+                    th Nombre
+                    th Edad
+                    th Opciones
+                tbody
+                    each estudiante in estudiantes
+                        tr  
+                            td 
+                                a(href='/estudiantes/' + estudiante._id) #{estudiante.nombre}
+                            td #{estudiante.edad}
+                            td 
+                                form(method="post", action="/estudiantes/borrar/" + estudiante._id)
+                                    button(name="borrar" , type="submit") Borrar
